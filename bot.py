@@ -1,7 +1,7 @@
 import telebot
 from telebot import TeleBot, types
-from functions import func_for_watch_descr, show_prices
-
+from functions import show_all_models, show_prices, show_modal_and_price
+from base_watches import models_watch
 
 
 TOKEN = "6556679332:AAGd4ZDmpWh1O9luTfeUKSGXUjdAAzEPiJ4"
@@ -53,44 +53,9 @@ def select_watch(message):
     btn12 = types.KeyboardButton('Tissot')
     btn13 = types.KeyboardButton('Bulova')
     btn14 = types.KeyboardButton('Michael Kors')
-    btn15 = types.KeyboardButton('Apple (Apple Watch)')
-    btn16 = types.KeyboardButton('Garmin')
-    btn17 = types.KeyboardButton('Hublot')
-    btn18 = types.KeyboardButton('Cartier')
-    btn19 = types.KeyboardButton('Breitling')
-    btn20 = types.KeyboardButton('Vacheron Constantin')
-    btn21 = types.KeyboardButton('Longines')
-    btn22 = types.KeyboardButton('Jaeger-LeCoultre')
-    btn23 = types.KeyboardButton('Panerai')
-    btn24 = types.KeyboardButton('IWC Schaffhausen')
-    btn25 = types.KeyboardButton('Chopard')
-    btn26 = types.KeyboardButton('Blancpain')
-    btn27 = types.KeyboardButton('Ulysse Nardin')
-    btn28 = types.KeyboardButton('Rado')
-    btn29 = types.KeyboardButton('Oris')
-    btn30 = types.KeyboardButton('Bell & Ross')
-    btn31 = types.KeyboardButton('Maurice Lacroix')
-    btn32 = types.KeyboardButton('Baume & Mercier')
-    btn33 = types.KeyboardButton('Raymond Weil')
-    btn34 = types.KeyboardButton('Girard-Perregaux')
-    btn35 = types.KeyboardButton('Sinn')
-    btn36 = types.KeyboardButton('Montblanc')
-    btn37 = types.KeyboardButton('Victorinox')
-    btn38 = types.KeyboardButton('Breguet')
-    btn39 = types.KeyboardButton('Zenith')
-    btn40 = types.KeyboardButton('Alpina')
-    btn41 = types.KeyboardButton('Bulgari')
-    btn42 = types.KeyboardButton('Frederique Constant')
-    btn43 = types.KeyboardButton('Nomos Glashütte')
-    btn44 = types.KeyboardButton('Piaget')
-    btn45 = types.KeyboardButton('H. Moser & Cie')
-    btn46 = types.KeyboardButton('Richard Mille')
-    btn47 = types.KeyboardButton('HYT')
-    btn48 = types.KeyboardButton('Corum')
-    btn49 = types.KeyboardButton('Shinola')
-    btn50 = types.KeyboardButton('DIOR')
+    btn15= types.KeyboardButton('DIOR')
     
-    markup.add(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16, btn17, btn18, btn19, btn20, btn21, btn22, btn23, btn24, btn25, btn26, btn27, btn28, btn29, btn30, btn31, btn32, btn33, btn34, btn35, btn36, btn37, btn38, btn39, btn40, btn41, btn42, btn43, btn44, btn45, btn46, btn47, btn48, btn49, btn50)
+    markup.add(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15)
     bot.send_message(message.chat.id, select_watch, parse_mode='html', reply_markup=markup)
 
 #MustaStyle
@@ -100,8 +65,8 @@ def select_watch(message):
 
 #Rolex
     @bot.message_handler(func=lambda message: message.text == btn1.text)
-    def models(message):
-        func_for_watch_descr('Rolex', 
+    def models(message):    
+        show_all_models('Rolex', 
                                 'Rolex Submariner',
                                 'Rolex Datejust',
                                 'Rolex Day-Date',
@@ -114,6 +79,15 @@ def select_watch(message):
                                 'Rolex Oyster Perpetual',
                                 'Узнать цены часов', 
                                 message)
+
+        @bot.message_handler(func=lambda message: message.text.lower() == "rolex submariner")
+        def show_modal_and_price(message):
+            for company, models in models_watch.items():
+                for model, price_range in models.items():
+                    bot.send_message(message.chat.id, f"Выбранная модель часов {company} {model} имеет стоимость в пределах {price_range} в зависимости от комплектации.")
+
+
+
         @bot.message_handler(func=lambda message: message.text.lower() == 'узнать цены часов')
         def prices(message):
             show_prices('Rolex Submariner','600,000 - 2,700,000 руб.',
@@ -127,7 +101,9 @@ def select_watch(message):
                         'Rolex Milgauss', '600,000 - 1,500,000 руб.',
                         'Rolex Oyster Perpetual', '375,000 - 1,500,000 руб.',
                         message)
-   
+            
+        
+
 #Omega
     @bot.message_handler(func=lambda message: message.text == btn2.text)
     def models(message):
