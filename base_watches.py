@@ -187,5 +187,3 @@ base_watches = {
         'La Mini D de DIOR': '60,000 - 700,000 руб.',
     }
 }
-
-
