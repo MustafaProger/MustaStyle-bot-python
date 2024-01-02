@@ -7,9 +7,12 @@ TOKEN = "6556679332:AAGd4ZDmpWh1O9luTfeUKSGXUjdAAzEPiJ4"
 bot = telebot.TeleBot(TOKEN)
 
 HELP_COMMAND = """
+<b>Список всех команд:</b>\n
 /help - список комманд 
-/start - начать работу с ботом
+/start | /go - начать работу с ботом
 /about - о нас
+/consultation - консультация по выбору часов
+/author - об создателе бота и сайта
 """
 
 user_language = {} 
@@ -35,7 +38,6 @@ def btn_company(message, select_wat, back_lang):
 
     markup.add(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, back_lang)
     bot.send_message(message.chat.id, select_wat, parse_mode='html', reply_markup=markup)
-
 
 def create_company_handler(company, models):
     @bot.message_handler(func=lambda message, comp=company: message.text == comp)
@@ -114,10 +116,13 @@ def create_company_handler(company, models):
                 for company, models in base_watches.items():
                     create_company_handler(company, models)
 
+@bot.message_handler(commands=['author'])
+def help_command(message):
+    bot.send_message(message.chat.id, 'Автором всего этого является студент 2-ого курса программирование Тоджиев Мустафа (Диёр). Это команда была сделана специально для моего преподавателя - Марата, дабы показать, что всем этим занимался я, а не кто-либо другой.')
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
-    bot.send_message(message.chat.id, HELP_COMMAND)
+    bot.send_message(message.chat.id, HELP_COMMAND, parse_mode='html')
 
 @bot.message_handler(commands=['about'])
 def about_handler(message):
@@ -128,11 +133,25 @@ def start_handler(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
     btn1 = types.KeyboardButton('Русский 🇷🇺')
     btn2 = types.KeyboardButton('English 🇬🇧')
-    markup.add(btn1, btn2)
+    btn3 = types.KeyboardButton('Консультация | Consultation')
+    markup.add(btn1, btn2, btn3)
     send_mess = f'Привет, {message.from_user.first_name}.'
     bot.send_message(message.chat.id, send_mess, parse_mode='html', reply_markup=markup)
-    bot.send_message(message.chat.id, 'Выберите язык.')
+    bot.send_message(message.chat.id, 'Выберите язык или же проконсультируйтесь со специалистами MustaStyle для подробра часов')
 
+@bot.message_handler(commands=['consultation'])
+def start_handler(message):
+        consul_markup = types.InlineKeyboardMarkup()
+        consul_url = types.InlineKeyboardButton('КОНСУЛЬТАЦИЯ', url='https://mustafapulse.ru/')
+        consul_markup.add(consul_url)
+        bot.send_message(message.chat.id, 'Ты не знаешь какие часы хочешь, не переживай MustaStyle подберет тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажите нам о том, какие часы ты хочешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время.', parse_mode='html', reply_markup=consul_markup)
+
+@bot.message_handler(func=lambda message: message.text.lower() == 'консультация | consultation')
+def start_handler(message):
+        consul_markup = types.InlineKeyboardMarkup()
+        consul_url = types.InlineKeyboardButton('ЗАКАЗАТЬ КОНСУЛЬТАЦИЯ', url='https://mustafapulse.ru/')
+        consul_markup.add(consul_url)
+        bot.send_message(message.chat.id, 'Ты не знаешь какие часы хочешь, не переживай MustaStyle подберет тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажите нам о том, какие часы ты хочешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время.', parse_mode='html', reply_markup=consul_markup)
 
 @bot.message_handler(func=lambda message: message.text == 'Русский 🇷🇺')
 def select_watch_russian(message):
@@ -146,7 +165,8 @@ def select_watch_russian(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn1 = types.KeyboardButton('Русский 🇷🇺')
         btn2 = types.KeyboardButton('English 🇬🇧')
-        markup.add(btn1, btn2)
+        btn3 = types.KeyboardButton('Консультация | Consultation')
+        markup.add(btn1, btn2, btn3)
         bot.send_message(message.chat.id, 'Выберите язык.', parse_mode='html', reply_markup=markup)
 
 
@@ -162,13 +182,6 @@ def select_watch_russian(message):
 
         bot.send_message(message.chat.id, 'Ух ты, MustaStyle — твой выбор! Мы с удовольствием предложим тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажи нам о том, какие часы ты предпочитаешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время. Доверь нам создание твоего идеального аксессуара времени!', reply_markup=url_markup)
 
-
-
-
-
-
-
-
 @bot.message_handler(func=lambda message: message.text == 'English 🇬🇧')
 def select_watch_english(message):
     user_language[message.chat.id] = 'english'
@@ -181,7 +194,8 @@ def select_watch_english(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
         btn1 = types.KeyboardButton('Русский 🇷🇺')
         btn2 = types.KeyboardButton('English 🇬🇧')
-        markup.add(btn1, btn2)
+        btn3 = types.KeyboardButton('Консультация | Consultation')
+        markup.add(btn1, btn2, btn3)
         bot.send_message(message.chat.id, 'Выберите язык.', parse_mode='html', reply_markup=markup)
 
     
@@ -196,6 +210,5 @@ def select_watch_english(message):
         url_markup.add(url_btns)
 
         bot.send_message(message.chat.id, 'Wow, MustaStyle is your choice! We will be happy to offer you a unique watch that suits your taste, color scheme and budget. Just tell us which watch you prefer by leaving a request on our website, and we will contact you as soon as possible. Trust us to create your perfect time accessory!', reply_markup=url_markup)
-
 
 bot.polling(none_stop=True)
