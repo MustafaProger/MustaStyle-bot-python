@@ -53,7 +53,7 @@ def create_company_handler(company, models):
             markup.add(*buttons, back_btn)
 
             url_markup =  types.InlineKeyboardMarkup()
-            url_btns = types.InlineKeyboardButton('ОФОРМИТЬ', url='https://mustafapulse.ru/')
+            url_btns = types.InlineKeyboardButton('ОФОРМИТЬ', url='https://mustastyle.ru/')
             url_markup.add(url_btns)
 
             bot.send_message(message.chat.id, f'Отлично, {message.from_user.first_name}, ваш выбор пал на фирму {company}.')
@@ -89,7 +89,7 @@ def create_company_handler(company, models):
             markup.add(*buttons, back_btn)
 
             url_markup =  types.InlineKeyboardMarkup()
-            url_btns = types.InlineKeyboardButton('PLACE AN ORDER', url='https://mustafapulse.ru/')
+            url_btns = types.InlineKeyboardButton('PLACE AN ORDER', url='https://mustastyle.ru/')
             url_markup.add(url_btns)
 
             bot.send_message(message.chat.id, f'Great, {message.from_user.first_name}, your choice fell on the company {company}.')
@@ -144,21 +144,21 @@ def help_command(message):
 @bot.message_handler(commands=['consultation'])
 def start_handler(message):
     consul_markup = types.InlineKeyboardMarkup()
-    consul_url = types.InlineKeyboardButton('КОНСУЛЬТАЦИЯ', url='https://mustafapulse.ru/')
+    consul_url = types.InlineKeyboardButton('КОНСУЛЬТАЦИЯ', url='https://mustastyle.ru/')
     consul_markup.add(consul_url)
     bot.send_message(message.chat.id, 'Ты не знаешь какие часы хочешь, не переживай MustaStyle подберет тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажите нам о том, какие часы ты хочешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время.', parse_mode='html', reply_markup=consul_markup)
 
 @bot.message_handler(commands=['site'])
 def start_handler(message):
     site_markup = types.InlineKeyboardMarkup()
-    site_url = types.InlineKeyboardButton('ПЕРЕЙТИ НА САЙТ', url='https://mustafapulse.ru/')
+    site_url = types.InlineKeyboardButton('ПЕРЕЙТИ НА САЙТ', url='https://mustastyle.ru/')
     site_markup.add(site_url)
     bot.send_message(message.chat.id, 'Ссылка на наш официальный сайт.', parse_mode='html', reply_markup=site_markup)
 
 @bot.message_handler(func=lambda message: message.text.lower() == 'консультация | consultation')
 def start_handler(message):
     consul_markup = types.InlineKeyboardMarkup()
-    consul_url = types.InlineKeyboardButton('ЗАКАЗАТЬ КОНСУЛЬТАЦИЯ', url='https://mustafapulse.ru/')
+    consul_url = types.InlineKeyboardButton('ЗАКАЗАТЬ КОНСУЛЬТАЦИЯ', url='https://mustastyle.ru/')
     consul_markup.add(consul_url)
     bot.send_message(message.chat.id, 'Ты не знаешь какие часы хочешь, не переживай MustaStyle подберет тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажите нам о том, какие часы ты хочешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время.', parse_mode='html', reply_markup=consul_markup)
 
@@ -185,7 +185,7 @@ def select_watch_russian(message):
     def models(message):
 
         url_markup =  types.InlineKeyboardMarkup()
-        url_btns = types.InlineKeyboardButton('ОФОРМИТЬ', url='https://mustafapulse.ru/')
+        url_btns = types.InlineKeyboardButton('ОФОРМИТЬ', url='https://mustastyle.ru/')
         url_markup.add(url_btns)
 
         bot.send_message(message.chat.id, 'Ух ты, MustaStyle — твой выбор! Мы с удовольствием предложим тебе уникальные часы, соответствующие твоему вкусу, цветовой гамме и бюджету. Просто расскажи нам о том, какие часы ты предпочитаешь, оставив заявку на нашем сайте, и мы обязательно свяжемся с тобой в самое ближайшее время. Доверь нам создание твоего идеального аксессуара времени!', reply_markup=url_markup)
@@ -213,7 +213,7 @@ def select_watch_english(message):
     def models(message):
 
         url_markup =  types.InlineKeyboardMarkup()
-        url_btns = types.InlineKeyboardButton('PLACE AN ORDER', url='https://mustafapulse.ru/')
+        url_btns = types.InlineKeyboardButton('PLACE AN ORDER', url='https://mustastyle.ru/')
         url_markup.add(url_btns)
 
         bot.send_message(message.chat.id, 'Wow, MustaStyle is your choice! We will be happy to offer you a unique watch that suits your taste, color scheme and budget. Just tell us which watch you prefer by leaving a request on our website, and we will contact you as soon as possible. Trust us to create your perfect time accessory!', reply_markup=url_markup)
